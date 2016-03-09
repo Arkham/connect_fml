@@ -64,7 +64,10 @@ class BoardTestCase(unittest.TestCase):
         board.player_move('Y', 2)
         board.player_move('R', 1)
 
-        self.assertEqual(board.is_over(), [True, 'Win', 'R'])
+        status = board.status
+        self.assertEqual(status.is_over, True)
+        self.assertEqual(status.is_win, True)
+        self.assertEqual(status.winner, 'R')
 
     def test_check_vertical_win(self):
         board = Board(num_rows = 2, num_columns = 3, required_to_win = 2)
@@ -73,7 +76,10 @@ class BoardTestCase(unittest.TestCase):
         board.player_move('R', 2)
         board.player_move('Y', 0)
 
-        self.assertEqual(board.is_over(), [True, 'Win', 'Y'])
+        status = board.status
+        self.assertEqual(status.is_over, True)
+        self.assertEqual(status.is_win, True)
+        self.assertEqual(status.winner, 'Y')
 
     def test_check_diagonal_win(self):
         board = Board(num_rows = 2, num_columns = 3, required_to_win = 2)
@@ -82,7 +88,10 @@ class BoardTestCase(unittest.TestCase):
         board.player_move('Y', 1)
         board.player_move('R', 1)
 
-        self.assertEqual(board.is_over(), [True, 'Win', 'R'])
+        status = board.status
+        self.assertEqual(status.is_over, True)
+        self.assertEqual(status.is_win, True)
+        self.assertEqual(status.winner, 'R')
 
     def test_check_other_diagonal_win(self):
         board = Board(num_rows = 2, num_columns = 3, required_to_win = 2)
@@ -91,7 +100,10 @@ class BoardTestCase(unittest.TestCase):
         board.player_move('R', 0)
         board.player_move('Y', 0)
 
-        self.assertEqual(board.is_over(), [True, 'Win', 'Y'])
+        status = board.status
+        self.assertEqual(status.is_over, True)
+        self.assertEqual(status.is_win, True)
+        self.assertEqual(status.winner, 'Y')
 
     def test_check_draw(self):
         board = Board(num_rows = 2, num_columns = 3, required_to_win = 3)
@@ -103,7 +115,9 @@ class BoardTestCase(unittest.TestCase):
         board.player_move('Y', 1)
         board.player_move('R', 2)
 
-        self.assertEqual(board.is_over(), [True, 'Draw'])
+        status = board.status
+        self.assertEqual(status.is_over, True)
+        self.assertEqual(status.is_draw, True)
 
     def test_check_still_playing(self):
         board = Board(num_rows = 2, num_columns = 3, required_to_win = 3)
@@ -111,7 +125,8 @@ class BoardTestCase(unittest.TestCase):
         board.player_move('Y', 0)
         board.player_move('R', 1)
 
-        self.assertEqual(board.is_over(), [False])
+        status = board.status
+        self.assertEqual(status.is_over, False)
 
 if __name__ == '__main__':
     unittest.main()

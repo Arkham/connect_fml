@@ -11,6 +11,14 @@ class InvalidPlayerException(Exception):
 class ColumnFullException(Exception):
     pass
 
+class BoardStatus(object):
+    def __init__(self, board, is_over = False, is_win = False, is_draw = False, winner = None):
+        self.board = board
+        self.is_over = is_over
+        self.is_win = is_win
+        self.is_draw = is_draw
+        self.winner = winner
+
 class Board(object):
     def __init__(self, num_columns = 7, num_rows = 6, required_to_win = 4, players = ['R', 'Y']):
         self.num_columns = num_columns
@@ -67,7 +75,8 @@ class Board(object):
 
         self.board[empty_row_index][column_index] = player
 
-    def is_over(self):
+    @property
+    def status(self):
         lines = (
             self.rows,
             self.columns,
@@ -78,12 +87,12 @@ class Board(object):
         for line in chain(*lines):
             for cell, group in groupby(line):
                 if cell != EMPTY and len(list(group)) >= self.required_to_win:
-                    return [True, 'Win', cell]
+                    return BoardStatus(self, is_over = True, is_win = True, winner = cell)
 
         if self.is_full():
-            return [True, 'Draw']
+            return BoardStatus(self, is_over = True, is_draw = True)
         else:
-            return [False]
+            return BoardStatus(self, is_over = False)
 
     def display(self):
         return '\n'.join(
