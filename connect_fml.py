@@ -25,11 +25,11 @@ class Board(object):
         self.num_rows = num_rows
         self.required_to_win = required_to_win
         self.players = players
-        self.board = [[EMPTY] * num_columns for _ in range(num_rows)]
+        self.matrix = [[EMPTY] * num_columns for _ in range(num_rows)]
 
     @property
     def rows(self):
-        return self.board
+        return self.matrix
 
     @property
     def columns(self):
@@ -44,13 +44,13 @@ class Board(object):
 
     @property
     def positive_diagonals(self):
-        return [[ self.board[q][p-q] for (p, q) in diagonal ]
+        return [[ self.rows[q][p-q] for (p, q) in diagonal ]
             for diagonal in self.diagonal_indexes]
 
     @property
     def negative_diagonals(self):
         h = self.num_rows
-        return [[ self.board[h-1-q][p-q] for (p, q) in diagonal ]
+        return [[ self.rows[h-1-q][p-q] for (p, q) in diagonal ]
             for diagonal in self.diagonal_indexes]
 
     def is_empty(self):
@@ -73,7 +73,7 @@ class Board(object):
         except StopIteration:
             raise ColumnFullException('Column %d is full' % column_index)
 
-        self.board[empty_row_index][column_index] = player
+        self.rows[empty_row_index][column_index] = player
 
     @property
     def status(self):
@@ -96,6 +96,6 @@ class Board(object):
 
     def display(self):
         return '\n'.join(
-            [' '.join(row) for row in reversed(self.board)] +
+            [' '.join(row) for row in reversed(self.rows)] +
             [' '.join(map(str, range(self.num_columns)))]
         )
