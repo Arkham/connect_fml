@@ -54,7 +54,7 @@ class Board(object):
             for diagonal in self.diagonal_indexes]
 
     def is_empty(self):
-        return all(cell == EMPTY for cell in list(chain(*self.rows)))
+        return all(cell == EMPTY for cell in self.rows[0])
 
     def is_full(self):
         return all(cell != EMPTY for cell in self.rows[-1])
