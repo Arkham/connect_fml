@@ -1,1 +1,3 @@
 *.pyc
+data/connect-4.data
+data/connect-4.data.converted
