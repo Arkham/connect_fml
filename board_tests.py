@@ -1,5 +1,5 @@
 import unittest
-from connect_fml import Board, InvalidColumnException, InvalidPlayerException, ColumnFullException
+from board import *
 
 class BoardTestCase(unittest.TestCase):
     def test_board_is_empty(self):
